@@ -1,8 +1,10 @@
 const Sequelize = require('sequelize')
 const db = require('../config/database')
+const Recipient = require('./recipient')
+
 
 const Task = db.define('task', {
-    appointeeId: {
+    recipientId: {
         type: Sequelize.STRING
     },
     category: {
@@ -27,5 +29,9 @@ const Task = db.define('task', {
         type: Sequelize.STRING
     },
 })
+
+Task.hasOne(Recipient)
+Recipient.belongsTo(Task)
+
 
 module.exports = Task

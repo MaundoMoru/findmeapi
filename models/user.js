@@ -2,6 +2,7 @@ const  Sequelize  = require('sequelize')
 const db = require('../config/database')
 const Log = require('../models/log')
 const Task = require('../models/task')
+const Recipient = require('../models/recipient')
 
 const User = db.define('user', {
     image:{
@@ -34,9 +35,10 @@ const User = db.define('user', {
 User.hasMany(Task)
 Task.belongsTo(User)
 
-// user and tasks relationship
-User.hasMany(Task)
-Task.belongsTo(User)
+User.hasOne(Recipient)
+Recipient.belongsTo(User)
+
+
 
 
 module.exports = User

@@ -20,7 +20,11 @@ User.sync({force: false}).then(function () {
 }
 
 const fetchUsers = (req, res)=>{
-    User.findAll({})
+    User.findAll({
+        order:[
+            ['id', 'ASC']
+        ]
+    })
     .then((data)=>{
         res.send(data)
     }).catch((err)=>{
