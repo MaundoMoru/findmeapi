@@ -32,12 +32,20 @@ const fetchUsers = (req, res)=>{
     })
 }
 
-const testUsers = (req, res)=>{
-    res.send('Hello');
+const deleteUser = (req, res)=>{
+    const id = req.body.id
+    console.log(id)
+    User.findByPk(id)
+    .then((success)=>{
+        return success.destroy()
+    }).catch((err)=>{
+        res.send(err)
+    })
+
 }
 
 module.exports = {
     addUser,
     fetchUsers,
-    testUsers
+    deleteUser
 }
