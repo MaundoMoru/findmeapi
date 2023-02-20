@@ -4,5 +4,6 @@ const userRoute = require('../controllers/userController')
 const router = express.Router()
 router.post('/addUser', userRoute.addUser)
 router.get('/fetchUsers', userRoute.fetchUsers)
+router.get('/testUsers', userRoute.testUsers)
 
 module.exports = router

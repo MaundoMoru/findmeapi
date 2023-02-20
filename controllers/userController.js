@@ -32,7 +32,12 @@ const fetchUsers = (req, res)=>{
     })
 }
 
+const testUsers = (req, res)=>{
+    res.send('Hello');
+}
+
 module.exports = {
     addUser,
-    fetchUsers
+    fetchUsers,
+    testUsers
 }
