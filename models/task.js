@@ -5,7 +5,7 @@ const Recipient = require('./recipient')
 
 const Task = db.define('task', {
     recipientId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
     },
     category: {
         type: Sequelize.STRING

@@ -4,6 +4,7 @@
   "description": "This is an Api for find me",
   "main": "server.js",
   "scripts": {
+    "start":"node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joseph",
