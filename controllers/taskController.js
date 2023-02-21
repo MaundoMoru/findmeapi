@@ -54,7 +54,25 @@ const fetchTasks = (req, res)=>{
     })
 }
 
+const deleteTasks = (req, res)=>{
+    Task.findAll({include: Recipient})
+    .then((success)=>{
+        if(success){
+            success.destroy()
+            .then((obj)=>{
+                res.send({message: 'Tasks deleted successfully'})
+            })
+        }else{
+            res.send({message: 'No tasks found'})
+        }
+    })
+    .catch((err)=>{
+        res.send(err)
+    })
+}
+
 module.exports = {
     addTask,
     fetchTasks,
+    deleteTasks
 }
