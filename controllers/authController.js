@@ -1,6 +1,6 @@
 // require("dotenv").config();
 const User = require('../models/user')
-const client = require('twilio')("ACc06e4db2de6878f7e2f17b1df420d789", "0e9df67e2363284dec079c3592eab882");
+const client = require('twilio')("ACc06e4db2de6878f7e2f17b1df420d789", "c2e7ce7be594061441ebce6749d7ff00");
 
 
 const sendOtp = (req, res) => {
