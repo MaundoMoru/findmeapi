@@ -1,12 +1,12 @@
-require("dotenv").config();
+// require("dotenv").config();
 const User = require('../models/user')
-const client = require('twilio')("ACea03bcb64e2b4a51e72d848546a4845b", "19e8fc5162b06c511a3329e267292510");
+const client = require('twilio')("ACc06e4db2de6878f7e2f17b1df420d789", "0e9df67e2363284dec079c3592eab882");
 
 
 const sendOtp = (req, res) => {
   const {countryCode,phoneNumber} = req.body;
   
-client.verify.v2.services("VA29326688d04c9231c8fc814da2eb5a64")
+client.verify.v2.services("VA6a8ebeea88d5cb37dd5f35f95ddb35ca")
     .verifications
     .create({to: `${countryCode}${phoneNumber}`, channel: 'sms'})
     .then((verification) => {
@@ -23,7 +23,7 @@ const verifyOtp =  (req, res)=>{
 
   console.log({otp,countryCode,phoneNumber})
 
-   client.verify.v2.services("VA29326688d04c9231c8fc814da2eb5a64")
+   client.verify.v2.services("VA6a8ebeea88d5cb37dd5f35f95ddb35ca")
   .verificationChecks
   .create({to: `${countryCode}${phoneNumber}`, code: otp})
   .then((verification_check) =>{
