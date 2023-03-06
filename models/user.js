@@ -5,8 +5,11 @@ const Task = require('../models/task')
 const Recipient = require('../models/recipient')
 
 const User = db.define('user', {
-    image:{
+    phoneNumber:{
         type: Sequelize.STRING
+    },
+    image:{
+        type: Sequelize.STRING,
     },
     name:{
         type: Sequelize.STRING
