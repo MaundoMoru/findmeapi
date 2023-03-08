@@ -1,7 +1,7 @@
 const Sequelize  = require('sequelize');
 
-module.exports = new Sequelize('findmedb_86x8', 'findmedb_86x8_user', '0n2MEsVMUnp5SFcqJt1BrFkvrfTiv0r3', {
-    host: 'dpg-cg4b5fak728m6o5mmnig-a',
+module.exports = new Sequelize('findmedb_7i44', 'findmedb_7i44_user', '3fgNPLtd99kC7XlSFo1M3vcD9Ra1Lwai', {
+    host: 'dpg-cg4bf02k728m6o5p2rd0-a',
     dialect: 'postgres',
     operatorsAliases: false,
 
