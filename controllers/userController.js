@@ -3,13 +3,14 @@ const fs = require("fs");
 const aws = require("aws-sdk");
 
 const addUser = async (req, res) => {
-//  var check = User.findOne({where: {phoneNumber: req.body.phoneNumber}})
+  //  var check = User.findOne({where: {phoneNumber: req.body.phoneNumber}})
   if (typeof req.file === "undefined") {
     User.sync({ force: false }).then(function () {
       User.create({
         phoneNumber: req.body.phoneNumber,
         image: "",
         name: req.body.name,
+        bio: req.body.bio,
         hired: req.body.hired,
         availability: req.body.availability,
         category: req.body.category,
@@ -57,6 +58,7 @@ const addUser = async (req, res) => {
         phoneNumber: req.body.phoneNumber,
         image: uploadedImage.Location,
         name: req.body.name,
+        bio: req.body.bio,
         hired: req.body.hired,
         availability: req.body.availability,
         category: req.body.category,

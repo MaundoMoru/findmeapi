@@ -14,6 +14,9 @@ const User = db.define('user', {
     name:{
         type: Sequelize.STRING
     },
+    bio:{
+        type: Sequelize.STRING
+    },
     hired:{
         type: Sequelize.STRING
     },
