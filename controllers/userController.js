@@ -7,7 +7,7 @@ const addUser = async (req, res) => {
   if (typeof req.file === "undefined") {
     User.sync({ force: false }).then(function () {
       User.create({
-        phoneNumber: req.body.phoneNumber,
+        phoneNumber: req.body.countryCode+req.body.phoneNumber,
         image: "",
         name: req.body.name,
         bio: req.body.bio,
@@ -55,7 +55,7 @@ const addUser = async (req, res) => {
 
     User.sync({ force: false }).then(function () {
       User.create({
-        phoneNumber: req.body.phoneNumber,
+        phoneNumber: req.body.countryCode+req.body.phoneNumber,
         image: uploadedImage.Location,
         name: req.body.name,
         bio: req.body.bio,
@@ -67,6 +67,7 @@ const addUser = async (req, res) => {
         online: req.body.online,
       })
         .then((success) => {
+          fs.unlinkSync(req.file.path)
           res.send(success);
         })
         .catch((err) => {
