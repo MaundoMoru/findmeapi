@@ -1,13 +1,14 @@
 const User = require("../models/user");
 const fs = require("fs");
 const aws = require("aws-sdk");
+const { Console } = require("console");
 
 const addUser = async (req, res) => {
   //  var check = User.findOne({where: {phoneNumber: req.body.phoneNumber}})
   if (typeof req.file === "undefined") {
     User.sync({ force: false }).then(function () {
       User.create({
-        phoneNumber: req.body.countryCode+req.body.phoneNumber,
+        phoneNumber: req.body.countryCode + req.body.phoneNumber,
         image: "",
         name: req.body.name,
         bio: req.body.bio,
@@ -55,7 +56,7 @@ const addUser = async (req, res) => {
 
     User.sync({ force: false }).then(function () {
       User.create({
-        phoneNumber: req.body.countryCode+req.body.phoneNumber,
+        phoneNumber: req.body.countryCode + req.body.phoneNumber,
         image: uploadedImage.Location,
         name: req.body.name,
         bio: req.body.bio,
@@ -67,7 +68,7 @@ const addUser = async (req, res) => {
         online: req.body.online,
       })
         .then((success) => {
-          fs.unlinkSync(req.file.path)
+          fs.unlinkSync(req.file.path);
           res.send(success);
         })
         .catch((err) => {
@@ -76,6 +77,43 @@ const addUser = async (req, res) => {
     });
   }
 };
+
+const editUser = async (req, res) => {
+
+  // var s3 = new aws.S3({
+  //   region: "us-east-1",
+  //   accessKeyId: "AKIA53V7LDH2DRXQQX6X",
+  //   secretAccessKey: "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",
+  // });
+  // s3.deleteObject(
+  //   {
+  //     Bucket: "findmefilebucket",
+  //     Key: 'ferry.png',
+  //   },
+  //   function (err, data) {}
+  // );
+
+  User.update({
+      name: req.body.name,
+      bio: req.body.bio,
+      availability: req.body.availability,
+      category: req.body.category,
+    },
+    {
+      where: { id: req.params.id },
+    }
+  )
+    .then((success) => {
+      User.findOne({ where: { id: req.params.id } }).then((success) => {
+        res.send(success);
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
+
 
 const fetchUsers = (req, res) => {
   User.findAll({
@@ -105,4 +143,5 @@ module.exports = {
   addUser,
   fetchUsers,
   deleteUser,
+  editUser,
 };
