@@ -79,19 +79,22 @@ const addUser = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-
+  // const user = await User.findOne({ where: { id: req.params.id } });
+  // console.log(user.image);
   // var s3 = new aws.S3({
   //   region: "us-east-1",
   //   accessKeyId: "AKIA53V7LDH2DRXQQX6X",
   //   secretAccessKey: "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",
   // });
-  // s3.deleteObject(
-  //   {
-  //     Bucket: "findmefilebucket",
-  //     Key: 'ferry.png',
-  //   },
-  //   function (err, data) {}
-  // );
+
+  // await s3
+  //   .deleteObject({
+  //       Bucket: "findmefilebucket",
+  //       Key: user.image,
+  //     },
+  //     function (err, data) {}
+  //   )
+  //   .promise();
 
   User.update({
       name: req.body.name,
@@ -112,8 +115,6 @@ const editUser = async (req, res) => {
       res.send(err);
     });
 };
-
-
 
 const fetchUsers = (req, res) => {
   User.findAll({
