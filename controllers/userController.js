@@ -29,14 +29,14 @@ const addUser = async (req, res) => {
   } else {
     aws.config.update({
       region: "us-east-1",
-      accessKeyId: "AKIA53V7LDH2DRXQQX6X",
-      secretAccessKey: "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",
+      accessKeyId: "AKIA53V7LDH2E3R3HBXW",
+      secretAccessKey: "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",
     });
 
     const s3 = new aws.S3();
 
     var params = {
-      Bucket: "findmefilebucket",
+      Bucket: "findmefilesbucket",
       Key: req.file.originalname,
       Body: fs.createReadStream(req.file.path),
       ContentType: req.file.mimetype,
@@ -79,41 +79,80 @@ const addUser = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-  // const user = await User.findOne({ where: { id: req.params.id } });
-  // console.log(user.image);
-  // var s3 = new aws.S3({
-  //   region: "us-east-1",
-  //   accessKeyId: "AKIA53V7LDH2DRXQQX6X",
-  //   secretAccessKey: "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",
-  // });
-
-  // await s3
-  //   .deleteObject({
-  //       Bucket: "findmefilebucket",
-  //       Key: user.image,
-  //     },
-  //     function (err, data) {}
-  //   )
-  //   .promise();
-
-  User.update({
-      name: req.body.name,
-      bio: req.body.bio,
-      availability: req.body.availability,
-      category: req.body.category,
-    },
-    {
-      where: { id: req.params.id },
-    }
-  )
-    .then((success) => {
-      User.findOne({ where: { id: req.params.id } }).then((success) => {
-        res.send(success);
+  const user = await User.findOne({ where: { id: req.params.id } });
+  if (typeof req.file === "undefined") {
+    User.update(
+      {
+        image: user.image,
+        name: req.body.name,
+        bio: req.body.bio,
+        availability: req.body.availability,
+        category: req.body.category,
+      },
+      {
+        where: { id: req.params.id },
+      }
+    )
+      .then((success) => {
+        User.findOne({ where: { id: req.params.id } }).then((success) => {
+          res.send(success);
+        });
+      })
+      .catch((err) => {
+        res.send(err);
       });
-    })
-    .catch((err) => {
-      res.send(err);
+  }else{
+    aws.config.update({
+      region: "us-east-1",
+      accessKeyId: "AKIA53V7LDH2E3R3HBXW",
+      secretAccessKey: "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",
     });
+
+    const s3 = new aws.S3();
+
+    var params = {
+      Bucket: "findmefilesbucket",
+      Key: req.file.originalname,
+      Body: fs.createReadStream(req.file.path),
+      ContentType: req.file.mimetype,
+    };
+
+    const uploadedImage = await s3
+      .upload(params, (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("User created to database");
+        }
+      })
+      .promise();
+
+    console.log("This is it " + uploadedImage.Location);
+
+    User.sync({ force: false }).then(function () {
+      User.update(
+        {
+          image: uploadedImage.Location,
+          name: req.body.name,
+          bio: req.body.bio,
+          availability: req.body.availability,
+          category: req.body.category,
+        },
+        {
+          where: { id: req.params.id },
+        }
+      )
+        .then((success) => {
+          fs.unlinkSync(req.file.path);
+          User.findOne({ where: { id: req.params.id } }).then((success) => {
+            res.send(success);
+          });
+        })
+        .catch((err) => {
+          res.send(err);
+        });
+    });
+  }
 };
 
 const fetchUsers = (req, res) => {

@@ -7,6 +7,6 @@ const router = express.Router()
 router.post('/addUser',  upload.single('image'), userRoute.addUser)
 router.get('/fetchUsers', userRoute.fetchUsers)
 router.get('/deleteUser', userRoute.deleteUser)
-router.put('/editUser/:id', userRoute.editUser)
+router.put('/editUser/:id', upload.single('image'), userRoute.editUser)
 
 module.exports = router
