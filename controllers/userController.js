@@ -29,8 +29,8 @@ const addUser = async (req, res) => {
   } else {
     aws.config.update({
       region: "us-east-1",
-      accessKeyId: "AKIA53V7LDH2E3R3HBXW",
-      secretAccessKey: "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",
+      accessKeyId: "AKIA53V7LDH2MWUSHFRZ",
+      secretAccessKey: "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",
     });
 
     const s3 = new aws.S3();
@@ -80,6 +80,29 @@ const addUser = async (req, res) => {
 
 const editUser = async (req, res) => {
   const user = await User.findOne({ where: { id: req.params.id } });
+  // var splitUrl = user.image.split('/');
+  // console.log(splitUrl)
+  // let lastElement = await splitUrl[splitUrl.length - 1];
+  // console.log('File is '+lastElement);
+
+  // aws.config.update({
+  //   // region: "us-east-1",
+  //   accessKeyId: "AKIA53V7LDH2E3R3HBXW",
+  //   secretAccessKey: "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",
+  // });
+
+  // const s3 = new aws.S3();
+
+  // await s3
+  //   .deleteObject({
+  //       Bucket: "findmefilesbucket",
+  //       Key:'ferry.png',
+  //     },
+  //     function (err, data) {}
+  //   )
+  //   .promise();
+
+
   if (typeof req.file === "undefined") {
     User.update(
       {
@@ -104,8 +127,8 @@ const editUser = async (req, res) => {
   }else{
     aws.config.update({
       region: "us-east-1",
-      accessKeyId: "AKIA53V7LDH2E3R3HBXW",
-      secretAccessKey: "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",
+      accessKeyId: "AKIA53V7LDH2MWUSHFRZ",
+      secretAccessKey: "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",
     });
 
     const s3 = new aws.S3();
